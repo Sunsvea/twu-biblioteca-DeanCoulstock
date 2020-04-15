@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="d736cd20-4020-4722-a0d1-bd1d4287acee" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/com/twu/biblioteca/BibliotecaApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/com/twu/biblioteca/BibliotecaApp.java" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1aTGjNa6hcb2bD93H0SWeicj1ci" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
+  </component>
+  <component name="RunManager">
+    <configuration name="BibliotecaApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.twu.biblioteca.BibliotecaApp" />
+      <module name="biblioteca" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.twu.biblioteca.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.BibliotecaApp" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="d736cd20-4020-4722-a0d1-bd1d4287acee" name="Default Changelist" comment="" />
+      <created>1586752304541</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586752304541</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="WindowStateProjectService">
+    <state width="1537" height="262" key="GridCell.Tab.0.bottom" timestamp="1586752897446">
+      <screen x="0" y="22" width="1680" height="972" />
+    </state>
+    <state width="1537" height="262" key="GridCell.Tab.0.bottom/0.22.1680.972@0.22.1680.972" timestamp="1586752897446" />
+    <state width="1537" height="262" key="GridCell.Tab.0.center" timestamp="1586752897445">
+      <screen x="0" y="22" width="1680" height="972" />
+    </state>
+    <state width="1537" height="262" key="GridCell.Tab.0.center/0.22.1680.972@0.22.1680.972" timestamp="1586752897445" />
+    <state width="1537" height="262" key="GridCell.Tab.0.left" timestamp="1586752897445">
+      <screen x="0" y="22" width="1680" height="972" />
+    </state>
+    <state width="1537" height="262" key="GridCell.Tab.0.left/0.22.1680.972@0.22.1680.972" timestamp="1586752897445" />
+    <state width="1537" height="262" key="GridCell.Tab.0.right" timestamp="1586752897446">
+      <screen x="0" y="22" width="1680" height="972" />
+    </state>
+    <state width="1537" height="262" key="GridCell.Tab.0.right/0.22.1680.972@0.22.1680.972" timestamp="1586752897446" />
+    <state x="298" y="146" key="SettingsEditor" timestamp="1586752572285">
+      <screen x="0" y="22" width="1680" height="972" />
+    </state>
+    <state x="298" y="146" key="SettingsEditor/0.22.1680.972@0.22.1680.972" timestamp="1586752572285" />
+  </component>
+</project>
