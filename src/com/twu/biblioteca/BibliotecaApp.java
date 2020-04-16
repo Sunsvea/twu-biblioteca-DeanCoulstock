@@ -59,6 +59,10 @@ public class BibliotecaApp {
                 displayListOfBooks();
                 break;
             }
+            else {
+                System.out.println("Invalid option entered. Please select a valid option!");
+                displayMainMenu();
+            }
         }while(!(choice < 1));
     }
 
@@ -66,8 +70,6 @@ public class BibliotecaApp {
         System.out.println("-----------PROGRAM ENTRY POINT-----------"); //for debugging and thread timing
         displayWelcomeMessage();
         displayMainMenu();
-
-
     }
 }
 
