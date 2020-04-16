@@ -66,45 +66,64 @@ public class BibliotecaApp {
         writer.close();
         reader.close();
         boolean successful = tempFile.renameTo(inputFile);
+    }
+    public static void ReturnBookToLibrary(String bookName) throws IOException {
+        File inputFile = new File("CheckedOutBooks.txt");
+        File tempFile = new File("BookReturnTempFile.txt");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String lineToRemove = bookName;
+        String currentLine;
+
+        while((currentLine = reader.readLine()) != null) {
+            // trim newline when comparing with lineToRemove
+            String trimmedLine = currentLine.trim();
+            if(trimmedLine.equals(lineToRemove)) continue;
+            writer.write(currentLine + System.getProperty("line.separator"));
+        }
+        writer.close();
+        reader.close();
+        boolean successful = tempFile.renameTo(inputFile);
 
     }
-    public static void SearchBookTitle(String inputBook) throws IOException, InterruptedException {
-        File f1 = new File("BookNames.txt"); //Creation of File Descriptor for input file
+    public static String SearchBookTitle(String searchTerm, String bookType) throws IOException, InterruptedException {
+        String selectedBook = bookType;
+        File f1 = new File(selectedBook); //Creation of File Descriptor for input file
         FileReader fr = new FileReader(f1);  //Creation of File Reader object
         BufferedReader br = new BufferedReader(fr); //Creation of BufferedReader object
-        String input = inputBook;   // Input word to be searched
+        String input = searchTerm;   // Input word to be searched
         String currBookName;
         Boolean noBreak = true;
         while ((currBookName = br.readLine()) != null)   //Reading Content from the file
         {
             if (input.equals(currBookName))   //Search for the given word
             {
-                RemoveBookFromLibrary(currBookName);
-                try (PrintWriter out = new PrintWriter("CheckedOutBooks.txt")) {
-                    out.println(currBookName);
-                }
-                System.out.println("Thank you, enjoy the book! Returning to main menu.\n");
-                Thread.sleep(3000);
-                displayMainMenu();
                 noBreak = false;
+                return input;
+//                displayMainMenu();
             }
         }
         fr.close();
         if (noBreak) {
-            System.out.println("Sorry, that book is not available!\n");
+            System.out.println("Sorry, that book name is invalid! Returning to main menu.\n");
             Thread.sleep(3000);
             displayMainMenu();
         }
+        return "Invalid";
     }
     public static void displayMainMenu() throws IOException, InterruptedException {
         String showListOfBooks = "1. Show list of books";
         String quitQuery = "2. Exit this application";
         String checkoutBook = "3. Check out a book";
+        String returnBook = "4. Return a book\n";
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Please choose an option : ");
         System.out.println(showListOfBooks);
         System.out.println(quitQuery);
         System.out.println(checkoutBook);
+        System.out.print(returnBook);
         int choice = keyboard.nextInt();
         do{
             Thread.sleep(1000);
@@ -117,10 +136,30 @@ public class BibliotecaApp {
                 terminateApplication();
             }
             else if (choice == 3) {
-                System.out.println("Please input the title of your book (as accurately as possible) : ");
+                System.out.println("Please input the title of your book : ");
                 Scanner scanner = new Scanner( System. in);
                 String title = scanner.nextLine();
-                SearchBookTitle(title);
+                RemoveBookFromLibrary(SearchBookTitle(title, "BookNames.txt")); // Check out selected book
+                try (PrintWriter out = new PrintWriter(new FileWriter("CheckedOutBooks.txt", true)))
+                {
+                    out.println(title); // Write checked-out book to CheckedOutBooks
+                }
+                System.out.println("Thank you, enjoy the book! Returning to main menu.\n");
+                Thread.sleep(3000);
+                displayMainMenu();
+            }
+            else if (choice == 4) {
+                System.out.println("Please input the title of the book you wish to return : ");
+                Scanner scanner = new Scanner( System. in);
+                String title = scanner.nextLine();
+                ReturnBookToLibrary(SearchBookTitle(title, "CheckedOutBooks.txt"));
+                try (PrintWriter out = new PrintWriter(new FileWriter("BookNames.txt", true)))
+                {
+                    out.println(title); // Write checked-out book to CheckedOutBooks
+                }
+                System.out.println("Thank you for returning the book! Returning to the main menu.\n");
+                Thread.sleep(3000);
+                displayMainMenu();
             }
             else {
                 System.out.println("Invalid option entered. Please select a valid option!");
