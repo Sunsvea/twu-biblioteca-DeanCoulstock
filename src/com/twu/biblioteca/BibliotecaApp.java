@@ -1,7 +1,5 @@
 package com.twu.biblioteca;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -45,14 +43,68 @@ public class BibliotecaApp {
         }
         PublishDateList.close();
         authorList.close();
-        nameList.close(); }
+        nameList.close();
+        Thread.sleep(2000);
+        displayMainMenu();
+    }
+    public static void RemoveBookFromLibrary(String bookName) throws IOException {
+        File inputFile = new File("BookNames.txt");
+        File tempFile = new File("BookNameTempFile.txt");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String lineToRemove = bookName;
+        String currentLine;
+
+        while((currentLine = reader.readLine()) != null) {
+            // trim newline when comparing with lineToRemove
+            String trimmedLine = currentLine.trim();
+            if(trimmedLine.equals(lineToRemove)) continue;
+            writer.write(currentLine + System.getProperty("line.separator"));
+        }
+        writer.close();
+        reader.close();
+        boolean successful = tempFile.renameTo(inputFile);
+
+    }
+    public static void SearchBookTitle(String inputBook) throws IOException, InterruptedException {
+        File f1 = new File("BookNames.txt"); //Creation of File Descriptor for input file
+        FileReader fr = new FileReader(f1);  //Creation of File Reader object
+        BufferedReader br = new BufferedReader(fr); //Creation of BufferedReader object
+        String input = inputBook;   // Input word to be searched
+        String currBookName;
+        Boolean noBreak = true;
+        while ((currBookName = br.readLine()) != null)   //Reading Content from the file
+        {
+            if (input.equals(currBookName))   //Search for the given word
+            {
+                RemoveBookFromLibrary(currBookName);
+                try (PrintWriter out = new PrintWriter("CheckedOutBooks.txt")) {
+                    out.println(currBookName);
+                }
+                System.out.println("Thank you, enjoy the book! Returning to main menu.\n");
+                Thread.sleep(3000);
+                displayMainMenu();
+                noBreak = false;
+            }
+        }
+        fr.close();
+        if (noBreak) {
+            System.out.println("Sorry, that book is not available!\n");
+            Thread.sleep(3000);
+            displayMainMenu();
+        }
+    }
     public static void displayMainMenu() throws IOException, InterruptedException {
-        String options = "1. List of books";
+        String showListOfBooks = "1. Show list of books";
         String quitQuery = "2. Exit this application";
+        String checkoutBook = "3. Check out a book";
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Please choose an option : ");
-        System.out.println(options);
+        System.out.println(showListOfBooks);
         System.out.println(quitQuery);
+        System.out.println(checkoutBook);
         int choice = keyboard.nextInt();
         do{
             Thread.sleep(1000);
@@ -63,6 +115,12 @@ public class BibliotecaApp {
             }
             else if (choice == 2) {
                 terminateApplication();
+            }
+            else if (choice == 3) {
+                System.out.println("Please input the title of your book (as accurately as possible) : ");
+                Scanner scanner = new Scanner( System. in);
+                String title = scanner.nextLine();
+                SearchBookTitle(title);
             }
             else {
                 System.out.println("Invalid option entered. Please select a valid option!");
