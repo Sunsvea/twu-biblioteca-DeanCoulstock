@@ -36,21 +36,23 @@ public class BibliotecaApp {
 
 //        while((bookName = nameList.readLine()) != null) {
 //            while((bookAuthor = authorList.readLine()) != null) {
-                while(((bookPublishDate = PublishDateList.readLine()) != null) &
-                        ((bookAuthor = authorList.readLine()) != null) &
-                        ((bookName = nameList.readLine()) != null)) {
-                    String formattedBookAuthor = "by " + bookAuthor;
-                    System.out.printf("%-35s %-35s %-35s\n", bookName, formattedBookAuthor, bookPublishDate);
-                    Thread.sleep(250);
-                }
-                PublishDateList.close();
-                authorList.close();
-                nameList.close(); }
+        while(((bookPublishDate = PublishDateList.readLine()) != null) &
+                ((bookAuthor = authorList.readLine()) != null) &
+                ((bookName = nameList.readLine()) != null)) {
+            String formattedBookAuthor = "by " + bookAuthor;
+            System.out.printf("%-35s %-35s %-35s\n", bookName, formattedBookAuthor, bookPublishDate);
+            Thread.sleep(250);
+        }
+        PublishDateList.close();
+        authorList.close();
+        nameList.close(); }
     public static void displayMainMenu() throws IOException, InterruptedException {
         String options = "1. List of books";
+        String quitQuery = "2. Exit this application";
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Please choose an option : ");
         System.out.println(options);
+        System.out.println(quitQuery);
         int choice = keyboard.nextInt();
         do{
             Thread.sleep(1000);
@@ -59,11 +61,20 @@ public class BibliotecaApp {
                 displayListOfBooks();
                 break;
             }
+            else if (choice == 2) {
+                terminateApplication();
+            }
             else {
                 System.out.println("Invalid option entered. Please select a valid option!");
                 displayMainMenu();
             }
         }while(!(choice < 1));
+    }
+
+    public static void terminateApplication() throws InterruptedException {
+        System.out.println("Thank you for browsing the Bibliotecha Library. Have a wonderful day.");
+        Thread.sleep(2000);
+        System.exit(0);
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -74,5 +85,5 @@ public class BibliotecaApp {
 }
 
 /*
-* Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!"
-* */
+ * Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!"
+ * */
