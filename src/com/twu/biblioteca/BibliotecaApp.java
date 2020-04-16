@@ -11,6 +11,7 @@ public class BibliotecaApp {
         System.out.println();
         //        pressEnterKeyToContinue(); Phased out due to implementation of main menu
     }
+
     public static void displayListOfBooks() throws IOException, InterruptedException {
         System.out.println("Here is a list of books available to hire (alphabetical order by book title):");
         System.out.println("-----------------------------------------------------------------------------");
@@ -35,6 +36,7 @@ public class BibliotecaApp {
         Thread.sleep(2000);
         displayMainMenu();
     }
+
     public static void displayListOfMovies() throws IOException, InterruptedException {
         System.out.println("Here is a list of movies available to hire (ordered by worst movie rating):");
         System.out.println("-----------------------------------------------------------------------------");
@@ -72,6 +74,27 @@ public class BibliotecaApp {
         reader.close();
         boolean successful = tempFile.renameTo(inputFile);
     }
+
+    public static void RemoveMovieFromLibrary(String movieName) throws IOException {
+        File inputFile = new File("MovieList.txt");
+        File tempFile = new File("MovieNameTempFile.txt");
+
+        BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile));
+
+        String lineToRemove = movieName;
+        String currentLine;
+
+        while ((currentLine = reader.readLine()) != null) {
+            String trimmedLine = currentLine.trim();
+            if (trimmedLine.contains(lineToRemove)) continue;
+            writer.write(currentLine + System.getProperty("line.separator"));
+        }
+        writer.close();
+        reader.close();
+        boolean successful = tempFile.renameTo(inputFile);
+    }
+
     public static void ReturnBookToLibrary(String bookName) throws IOException {
         File inputFile = new File("CheckedOutBooks.txt");
         File tempFile = new File("BookReturnTempFile.txt");
@@ -93,7 +116,8 @@ public class BibliotecaApp {
         boolean successful = tempFile.renameTo(inputFile);
 
     }
-    public static String SearchBookTitle(String searchTerm, String bookType) throws IOException, InterruptedException {
+
+    public static String SearchTitle(String searchTerm, String bookType) throws IOException, InterruptedException {
         String selectedBook = bookType;
         File f1 = new File(selectedBook); //Creation of File Descriptor for input file
         FileReader fr = new FileReader(f1); //Creation of File Reader object
@@ -103,10 +127,10 @@ public class BibliotecaApp {
         Boolean noBreak = true;
         while ((currBookName = br.readLine()) != null) //Reading Content from the file
         {
-            if (input.equals(currBookName)) //Search for the given word
+            if (currBookName.contains(input)) //Search for the given word
             {
                 noBreak = false;
-                return input;
+                return currBookName;
             }
         }
         fr.close();
@@ -117,16 +141,18 @@ public class BibliotecaApp {
         }
         return "Invalid";
     }
-    private static void printMenuOptions(List < String > menuOptions) {
-        for (String value: menuOptions) {
+
+    private static void printMenuOptions(List<String> menuOptions) {
+        for (String value : menuOptions) {
             System.out.println(value);
         }
     }
+
     public static void displayMainMenu() throws IOException, InterruptedException {
         Scanner keyboard = new Scanner(System.in); //Initialise scanner for user's choice
         System.out.println("Please choose an option : ");
-        List < String > menuOptions = Arrays.asList("1. Show list of books",
-                "2. Exit this application", "3. Check out a book", "4. Return a book", "5. Movie List");
+        List<String> menuOptions = Arrays.asList("1. Show list of books",
+                "2. Exit this application", "3. Check out a book", "4. Return a book", "5. Movie List", "6. Check out a movie");
         printMenuOptions(menuOptions);
         int choice = keyboard.nextInt();
         do {
@@ -140,7 +166,7 @@ public class BibliotecaApp {
                 System.out.println("Please input the title of your book : ");
                 Scanner scanner = new Scanner(System.in);
                 String title = scanner.nextLine();
-                RemoveBookFromLibrary(SearchBookTitle(title, "BookNames.txt")); // Check out selected book
+                RemoveBookFromLibrary(SearchTitle(title, "BookNames.txt")); // Check out selected book
                 try (PrintWriter out = new PrintWriter(new FileWriter("CheckedOutBooks.txt", true))) {
                     out.println(title); // Write checked-out book to CheckedOutBooks
                 }
@@ -151,7 +177,7 @@ public class BibliotecaApp {
                 System.out.println("Please input the title of the book you wish to return : ");
                 Scanner scanner = new Scanner(System.in);
                 String title = scanner.nextLine();
-                ReturnBookToLibrary(SearchBookTitle(title, "CheckedOutBooks.txt"));
+                ReturnBookToLibrary(SearchTitle(title, "CheckedOutBooks.txt"));
                 try (PrintWriter out = new PrintWriter(new FileWriter("BookNames.txt", true))) {
                     out.println(title); // Write checked-out book to CheckedOutBooks
                 }
@@ -160,12 +186,25 @@ public class BibliotecaApp {
                 displayMainMenu();
             } else if (choice == 5) {
                 displayListOfMovies();
+            } else if (choice == 6) {
+                System.out.println("Please input the title of the movie you would like to check out : ");
+                Scanner scanner = new Scanner(System.in);
+                String movieTitle = scanner.nextLine();
+                String movieFullTitle = SearchTitle(movieTitle, "MovieList.txt");
+                RemoveMovieFromLibrary(SearchTitle(movieTitle, "MovieList.txt"));
+                try (PrintWriter out = new PrintWriter(new FileWriter("CheckedOutMovies.txt", true))) {
+                    out.println(movieFullTitle); // Write checked-out book to CheckedOutBooks
+                }
+                System.out.println("You have successfully checked out the movie.");
+            } else if (choice == 7) {
+                System.out.println("Please enter your library card number");
+
             } else {
                 System.out.println("Invalid option entered. Please select a valid option!");
                 displayMainMenu();
             }
-        } while (!(choice < 1));
-    }
+    } while(!(choice< 1));
+}
 
 
     public static void terminateApplication() throws InterruptedException {
