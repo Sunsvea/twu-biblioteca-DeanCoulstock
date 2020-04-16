@@ -117,20 +117,20 @@ public class BibliotecaApp {
 
     }
 
-    public static String SearchTitle(String searchTerm, String bookType) throws IOException, InterruptedException {
-        String selectedBook = bookType;
-        File f1 = new File(selectedBook); //Creation of File Descriptor for input file
+    public static String SearchTitle(String searchTerm, String catalog) throws IOException, InterruptedException {
+        String selectedCatalog = catalog;
+        File f1 = new File(selectedCatalog); //Creation of File Descriptor for input file
         FileReader fr = new FileReader(f1); //Creation of File Reader object
         BufferedReader br = new BufferedReader(fr); //Creation of BufferedReader object
         String input = searchTerm; // Input word to be searched
-        String currBookName;
+        String currItemName;
         Boolean noBreak = true;
-        while ((currBookName = br.readLine()) != null) //Reading Content from the file
+        while ((currItemName = br.readLine()) != null) //Reading Content from the file
         {
-            if (currBookName.contains(input)) //Search for the given word
+            if (currItemName.contains(input)) //Search for the given word
             {
                 noBreak = false;
-                return currBookName;
+                return currItemName;
             }
         }
         fr.close();
@@ -142,8 +142,8 @@ public class BibliotecaApp {
         return "Invalid";
     }
 
-    private static void printMenuOptions(List<String> menuOptions) {
-        for (String value : menuOptions) {
+    private static void printMenuOptions(List < String > menuOptions) {
+        for (String value: menuOptions) {
             System.out.println(value);
         }
     }
@@ -151,7 +151,7 @@ public class BibliotecaApp {
     public static void displayMainMenu() throws IOException, InterruptedException {
         Scanner keyboard = new Scanner(System.in); //Initialise scanner for user's choice
         System.out.println("Please choose an option : ");
-        List<String> menuOptions = Arrays.asList("1. Show list of books",
+        List < String > menuOptions = Arrays.asList("1. Show list of books",
                 "2. Exit this application", "3. Check out a book", "4. Return a book", "5. Movie List", "6. Check out a movie");
         printMenuOptions(menuOptions);
         int choice = keyboard.nextInt();
@@ -203,8 +203,8 @@ public class BibliotecaApp {
                 System.out.println("Invalid option entered. Please select a valid option!");
                 displayMainMenu();
             }
-    } while(!(choice< 1));
-}
+        } while (!(choice < 1));
+    }
 
 
     public static void terminateApplication() throws InterruptedException {
